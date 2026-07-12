@@ -1,3 +1,7 @@
+output "api_management_api_version_sets_id" {
+  description = "Map of id values across all api_management_api_version_sets, keyed the same as var.api_management_api_version_sets"
+  value       = { for k, v in azurerm_api_management_api_version_set.api_management_api_version_sets : k => v.id }
+}
 output "api_management_api_version_sets_api_management_name" {
   description = "Map of api_management_name values across all api_management_api_version_sets, keyed the same as var.api_management_api_version_sets"
   value       = { for k, v in azurerm_api_management_api_version_set.api_management_api_version_sets : k => v.api_management_name }
