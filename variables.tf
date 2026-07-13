@@ -23,38 +23,6 @@ EOT
     version_header_name = optional(string)
     version_query_name  = optional(string)
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_api_version_sets : (
-        length(v.display_name) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_api_version_sets : (
-        v.description == null || (length(v.description) > 0)
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_api_version_sets : (
-        v.version_header_name == null || (length(v.version_header_name) > 0)
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_api_version_sets : (
-        v.version_query_name == null || (length(v.version_query_name) > 0)
-      )
-    ])
-    error_message = "must not be empty"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_api_management_api_version_set's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -77,7 +45,19 @@ EOT
   #   source:    [from resourcegroups.ValidateName] !matched
   # path: api_management_name
   #   source:    [from validate.ApiManagementServiceName] !matched
+  # path: display_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: versioning_scheme
   #   source:    validation.StringInSlice value list is not a literal []string - likely a generated PossibleValuesFor*() helper; resolve separately
+  # path: description
+  #   condition: length(value) > 0
+  #   message:   must not be empty
+  # path: version_header_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
+  # path: version_query_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
 }
 
